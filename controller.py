@@ -1,3 +1,4 @@
+import time
 from model import Model
 from view import View
 from Controller_Category import Controller_Category
@@ -97,15 +98,18 @@ class Controller:
             if not choice.isdigit():
                 self.view.show_message("Error: 'number' must be a number.")
                 return
+            start_time = time.time()
             if choice == '1':
                  search_results , column_description = self.model.search_request1()
-                 self.view.format_and_print_results(search_results,column_description)
             elif choice == '2':
                 search_results, column_description = self.model.search_request2()
-                self.view.format_and_print_results(search_results, column_description)
             elif choice == '3':
                 search_results, column_description = self.model.search_request3()
-                self.view.format_and_print_results(search_results, column_description)
             elif choice == '4':
                 break
-            self.view.show_message("Search request  successfully done!")
+
+            end_time = time.time()
+            execution_time = (end_time - start_time) * 1000
+
+            self.view.format_and_print_results(search_results, column_description)
+            self.view.show_message(f"Search request successfully done! Execution time: {execution_time:.2f} milliseconds")
